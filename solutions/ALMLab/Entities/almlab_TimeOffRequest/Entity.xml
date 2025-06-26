@@ -56,12 +56,12 @@
               <Description description="" languagecode="1033" />
             </Descriptions>
             <options>
-              <option value="1" ExternalValue="" IsHidden="0">
+              <option value="1" ExternalValue="">
                 <labels>
                   <label description="Yes" languagecode="1033" />
                 </labels>
               </option>
-              <option value="0" ExternalValue="" IsHidden="0">
+              <option value="0" ExternalValue="">
                 <labels>
                   <label description="No" languagecode="1033" />
                 </labels>
@@ -69,7 +69,7 @@
             </options>
           </optionset>
           <displaynames>
-            <displayname description="Approved" languagecode="1033" />
+            <displayname description="Approved2" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="" languagecode="1033" />
