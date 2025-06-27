@@ -1,0 +1,51 @@
+name: Import code from github into an environment.
+
+on:
+  workflow_dispatch:
+    inputs:    
+     env_name:
+        description: name for the environment to be created
+        required: true
+
+     solution_name:
+        description: name of the solution to be imported
+        required: true
+
+
+jobs:
+  Create-Environments:
+    runs-on: ubuntu-latest
+    # or you can say runs-on: windows-latest
+    env:
+      RUNNER_DEBUG: 1
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        lfs: true
+
+    - name: who-am-i action
+      uses: microsoft/powerplatform-actions/who-am-i@v0
+      with:
+        environment-url: https://${{ github.event.inputs.env_name }}.crm.dynamics.com
+        app-id: ${{env.CLIENT_ID}}
+        client-secret: ${{ secrets.PowerPlatformSPN }}
+        tenant-id: ${{env.TENANT_ID}}        
+
+    - name: Pack the solution
+      uses: microsoft/powerplatform-actions/pack-solution@v0
+      with:
+        solution-folder: ${{ github.event.repository.name}}/solutions/${{ github.event.inputs.solution_name }}
+        solution-file: ${{ github.event.repository.name}}/output/${{ github.event.inputs.solution_name }}.zip
+        solution-type: Unmanaged
+
+    - name: Import solution as unmanaged to build env
+      uses: microsoft/powerplatform-actions/import-solution@v0
+      with:
+        environment-url: https://${{ github.event.inputs.env_name }}.crm.dynamics.com
+        app-id: ${{env.CLIENT_ID}}
+        client-secret: ${{ secrets.PowerPlatformSPN }}
+        tenant-id: ${{env.TENANT_ID}}
+        solution-file: ${{ github.event.repository.name}}/output/${{ github.event.inputs.solution_name }}.zip
+        force-overwrite: true
+        publish-changes: true    

@@ -10,8 +10,9 @@ on:
      user_id:
         description: AAD object id for the user
         required: true
-   
- #Do Not change these values
+env:
+  CLIENT_ID: ${{ vars.CLIENT_ID }}
+  TENANT_ID: ${{ vars.TENANT_ID }}
       
 
 jobs:
@@ -25,14 +26,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         lfs: true
-
-    - name: who-am-i action
-      uses: microsoft/powerplatform-actions/who-am-i@v0
-      with:
-        environment-url: ${{env.ENVIRONMENT_URL}}
-        app-id: ${{env.CLIENT_ID}}
-        client-secret: ${{ secrets.PowerPlatformSPN }}
-        tenant-id: ${{env.TENANT_ID}}        
+      
         
     - name: Create Environment
       uses: microsoft/powerplatform-actions/create-environment@v0
