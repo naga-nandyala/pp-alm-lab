@@ -10,7 +10,9 @@ on:
      solution_name:
         description: name of the solution to be imported
         required: true
-
+env:
+  CLIENT_ID: ${{ vars.CLIENT_ID }}
+  TENANT_ID: ${{ vars.TENANT_ID }}
 
 jobs:
   Create-Environments:
