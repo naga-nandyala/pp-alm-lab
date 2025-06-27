@@ -44,7 +44,7 @@ jobs:
         app-id: ${{env.CLIENT_ID}}
         client-secret: ${{ secrets.PowerPlatformSPN }}
         tenant-id: ${{env.TENANT_ID}}
-        environment: 'https://${{ github.event.inputs.env_name}}.dynamics.com'
+        environment: 'https://${{ github.event.inputs.env_name}}.crm.dynamics.com'
         user: ${{ github.event.inputs.user_id }}
         role: System Administrator
         
