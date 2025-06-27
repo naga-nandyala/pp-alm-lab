@@ -25,7 +25,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         lfs: true
-
+    - name: Show inputs
+      run: |
+        echo "env_name = ${{ github.event.inputs.env_name }}"
+        echo "solution_name = ${{ github.event.inputs.solution_name }}"
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
