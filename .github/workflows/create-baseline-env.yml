@@ -5,11 +5,11 @@ on:
     inputs:    
      env_name:
         description: name for the environment to be created
-        required: true        
+        required: true
 
      user_id:
         description: AAD object id for the user
-        required: true        
+        required: true
    
  #Do Not change these values
       
@@ -25,23 +25,31 @@ jobs:
     - uses: actions/checkout@v3
       with:
         lfs: true
+
+    - name: who-am-i action
+      uses: microsoft/powerplatform-actions/who-am-i@v0
+      with:
+        environment-url: ${{env.ENVIRONMENT_URL}}
+        app-id: ${{env.CLIENT_ID}}
+        client-secret: ${{ secrets.PowerPlatformSPN }}
+        tenant-id: ${{env.TENANT_ID}}        
         
-    - name: Create Developer Environment
+    - name: Create Environment
       uses: microsoft/powerplatform-actions/create-environment@v0
       with:
-        app-id: ${{secrets.CLIENT_ID}}
+        app-id: ${{env.CLIENT_ID}}
         client-secret: ${{ secrets.PowerPlatformSPN }}
-        tenant-id: ${{secrets.TENANT_ID}}
+        tenant-id: ${{env.TENANT_ID}}
         name: ${{ github.event.inputs.env_name}}
         type: Production
         domain: ${{ github.event.inputs.env_name}}
     
-    - name: assign-user to developer environment
+    - name: assign-user to environment
       uses:  microsoft/powerplatform-actions/assign-user@v0
       with:
-        app-id: ${{secrets.CLIENT_ID}}
+        app-id: ${{env.CLIENT_ID}}
         client-secret: ${{ secrets.PowerPlatformSPN }}
-        tenant-id: ${{secrets.TENANT_ID}}
+        tenant-id: ${{env.TENANT_ID}}
         environment: 'https://${{ github.event.inputs.env_name}}.dynamics.com'
         user: ${{ github.event.inputs.user_id }}
         role: System Administrator
