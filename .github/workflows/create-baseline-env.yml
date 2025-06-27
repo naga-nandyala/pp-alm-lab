@@ -33,6 +33,7 @@ jobs:
         echo "user_id = ${{ github.event.inputs.user_id }}"
         
     - name: Create Environment
+      id: create-env
       uses: microsoft/powerplatform-actions/create-environment@v0
       with:
         app-id: ${{env.CLIENT_ID}}
@@ -41,6 +42,19 @@ jobs:
         name: ${{ github.event.inputs.env_name}}
         type: Production
         domain: ${{ github.event.inputs.env_name}}
+    
+    - name: Capture Environment Details
+      run: |
+        echo "Environment URL: ${{ steps.create-env.outputs.environment-url }}"
+        echo "Environment ID: ${{ steps.create-env.outputs.environment-id }}"
+        echo "ENVIRONMENT_URL=${{ steps.create-env.outputs.environment-url }}" >> $GITHUB_ENV
+        echo "ENVIRONMENT_ID=${{ steps.create-env.outputs.environment-id }}" >> $GITHUB_ENV
+      
+    - name: print environment details
+      run: |
+        echo "Environment URL: ${{ env.ENVIRONMENT_URL }}"
+        echo "Environment ID: ${{ env.ENVIRONMENT_ID }}"
+        
     
     - name: assign-user to environment
       uses:  microsoft/powerplatform-actions/assign-user@v0
