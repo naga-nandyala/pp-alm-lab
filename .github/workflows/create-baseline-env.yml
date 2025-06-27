@@ -27,6 +27,10 @@ jobs:
       with:
         lfs: true
       
+    - name: Show inputs
+      run: |
+        echo "env_name = ${{ github.event.inputs.env_name }}"
+        echo "user_id = ${{ github.event.inputs.user_id }}"
         
     - name: Create Environment
       uses: microsoft/powerplatform-actions/create-environment@v0
